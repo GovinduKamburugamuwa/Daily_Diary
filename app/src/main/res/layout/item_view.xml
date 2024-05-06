@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/rounded_corner"
+    android:backgroundTint="#00BCD4"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/noteImageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/titleoutput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/noteImageView"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        tools:text="My title" />
+
+    <TextView
+        android:id="@+id/descriptionoutput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleoutput"
+        android:textColor="#FFFFFF"
+        tools:text="My long long long description" />
+
+    <TextView
+        android:id="@+id/timeoutput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descriptionoutput"
+        android:gravity="end"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#9C7979"
+        android:textSize="12sp"
+        tools:text="Jan 21 2020 " />
+
+    <TextView
+        android:id="@+id/dateoutput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timeoutput"
+        android:layout_alignParentEnd="true"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        tools:text="21/05/2023" />
+
+    <ImageView
+        android:id="@+id/delbtn"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/dateoutput"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="Delete"
+        android:src="@drawable/delete" />
+
+</RelativeLayout>

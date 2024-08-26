@@ -19,6 +19,8 @@ import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.codec
 
 public class Login extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
+    private EditText usernameEditText, passwordEditText, confirmPasswordEditText;
+    private Button crtbtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,39 +36,65 @@ public class Login extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
 
-        EditText passwordEditText = findViewById(R.id.pass);
-        Button crtbtn = findViewById(R.id.crtbtn);
+        usernameEditText = findViewById(R.id.username);
+        passwordEditText = findViewById(R.id.password);
+        confirmPasswordEditText = findViewById(R.id.confirmPassword);
+        crtbtn = findViewById(R.id.crtbtn);
 
         crtbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
-                if (savePasswordLocally(password)) {
+                String confirmPassword = confirmPasswordEditText.getText().toString();
+
+                if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                    showToast("Please fill in all fields");
+                    return;
+                }
+
+                if (!password.equals(confirmPassword)) {
+                    showToast("Passwords do not match");
+                    return;
+                }
+
+                if (usernameExists(username)) {
+                    showToast("Username already exists");
+                    return;
+                }
+
+                if (passwordExists(password)) {
+                    showToast("Password already exists");
+                    return;
+                }
+
+                if (saveCredentials(username, password)) {
                     showToast("Account has been created");
                     navigateToMainActivity2();
                 } else {
-                    showToast("Password already exists");
+                    showToast("Error creating account");
                 }
             }
         });
     }
 
-    private boolean savePasswordLocally(String password) {
-        if (sharedPreferences.contains("password")) {
-            String savedPassword = sharedPreferences.getString("password", "");
-            if (savedPassword.equals(encryptPassword(password))) {
-                return false; // Password already exists
-            }
-        }
+    private boolean usernameExists(String username) {
+        return sharedPreferences.contains("username_" + username);
+    }
 
+    private boolean passwordExists(String password) {
+        String encryptedPassword = encryptPassword(password);
+        return sharedPreferences.getAll().containsValue(encryptedPassword);
+    }
+
+    private boolean saveCredentials(String username, String password) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("password", encryptPassword(password));
-        editor.commit(); // Use commit() instead of apply()
-        return true; // Password saved successfully
+        editor.putString("username_" + username, username);
+        editor.putString("password_" + username, encryptPassword(password));
+        return editor.commit();
     }
 
     private String encryptPassword(String password) {
-        // Use SHA-256 to encrypt the password
         byte[] hash = DigestUtils.sha256(password);
         return Hex.encodeHexString(hash);
     }
@@ -78,5 +106,6 @@ public class Login extends AppCompatActivity {
     private void navigateToMainActivity2() {
         Intent intent = new Intent(this, HomeScreen.class);
         startActivity(intent);
+        finish();
     }
 }

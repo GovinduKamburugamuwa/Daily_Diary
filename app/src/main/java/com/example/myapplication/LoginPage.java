@@ -18,6 +18,7 @@ import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.codec
 
 public class LoginPage extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
+    private EditText usernameEditText;
     private EditText passwordEditText;
     private Button loginButton;
 
@@ -35,6 +36,7 @@ public class LoginPage extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
 
+        usernameEditText = findViewById(R.id.user2);
         passwordEditText = findViewById(R.id.pass2);
         loginButton = findViewById(R.id.logbtn1);
         Button registerButton = findViewById(R.id.regbtn);
@@ -45,26 +47,32 @@ public class LoginPage extends AppCompatActivity {
         });
 
         loginButton.setOnClickListener(v -> {
+            String username = usernameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
-            if (checkUserExists(password)) {
+
+            if (username.isEmpty() || password.isEmpty()) {
+                showToast("Please enter both username and password.");
+                return;
+            }
+
+            if (checkCredentials(username, password)) {
                 navigateToMainActivity2();
             } else {
-                showToast("User is not exist. Please create an account.");
+                showToast("Invalid username or password.");
             }
         });
     }
 
-    private boolean checkUserExists(String password) {
-        if (sharedPreferences.contains("password")) {
-            String savedPassword = sharedPreferences.getString("password", "");
+    private boolean checkCredentials(String username, String password) {
+        String storedPassword = sharedPreferences.getString("password_" + username, null);
+        if (storedPassword != null) {
             String encryptedPassword = encryptPassword(password);
-            return savedPassword.equals(encryptedPassword);
+            return storedPassword.equals(encryptedPassword);
         }
         return false;
     }
 
     private String encryptPassword(String password) {
-        // Use SHA-256 to encrypt the password
         byte[] hash = DigestUtils.sha256(password);
         return Hex.encodeHexString(hash);
     }
@@ -72,6 +80,7 @@ public class LoginPage extends AppCompatActivity {
     private void navigateToMainActivity2() {
         Intent intent = new Intent(this, HomeScreen.class);
         startActivity(intent);
+        finish(); // Close the login activity
     }
 
     private void showToast(String message) {

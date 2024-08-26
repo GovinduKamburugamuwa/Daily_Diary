@@ -26,6 +26,8 @@ public class HomeScreen extends AppCompatActivity {
     private static final String UNSPLASH_API_KEY = "wmhhlkg5YGHN1iioZxPoRt0_TaGkFVDldYk9jAZek-s";
     private static final String UNSPLASH_API_URL = "https://api.unsplash.com/photos/random";
 
+    private String loggedInUsername;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +51,14 @@ public class HomeScreen extends AppCompatActivity {
         setbtn.setOnClickListener(v -> navigateToSettings());
 
         loadRandomNatureImage();
+
+        loggedInUsername = getIntent().getStringExtra("username");
+        if (loggedInUsername == null) {
+            loggedInUsername = "Default";
+        }
+
         updateWelcomeText();
     }
-
     private void navigateToAddNoteActivity() {
         Intent intent = new Intent(this, AddNoteActivity.class);
         startActivity(intent);
@@ -87,8 +94,7 @@ public class HomeScreen extends AppCompatActivity {
     }
 
     private void updateWelcomeText() {
-        String defaultName = "Govindu";
-        text.setText("Welcome " + defaultName);
+        text.setText("Welcome " + loggedInUsername);
     }
 
     @Override
@@ -96,7 +102,10 @@ public class HomeScreen extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
             String userName = data.getStringExtra("userName");
-            text.setText("Welcome " + userName);
+            if (userName != null && !userName.isEmpty()) {
+                loggedInUsername = userName;
+                updateWelcomeText();
+            }
         }
     }
 }

@@ -56,7 +56,7 @@ public class LoginPage extends AppCompatActivity {
             }
 
             if (checkCredentials(username, password)) {
-                navigateToMainActivity2();
+                navigateToMainActivity2(username);  // Pass the username here
             } else {
                 showToast("Invalid username or password.");
             }
@@ -85,5 +85,12 @@ public class LoginPage extends AppCompatActivity {
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void navigateToMainActivity2(String username) {
+        Intent intent = new Intent(this, HomeScreen.class);
+        intent.putExtra("username", username);
+        startActivity(intent);
+        finish(); // Close the login activity
     }
 }

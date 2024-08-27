@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    android:background="@drawable/sign_page"
+    android:background="@drawable/background"
     android:scaleType="centerCrop"
     tools:context=".ViewScreen">
 
@@ -29,8 +29,9 @@
         android:id="@+id/addnewnotebtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#00BCD4"
+        android:backgroundTint="#E91E63"
         android:text="Add new note"
+        app:shapeAppearance="@style/CustomShapeAppearance"
         android:textColor="#FCFEFF" />
 
 

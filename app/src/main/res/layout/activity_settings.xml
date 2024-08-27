@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sign_page"
+    android:background="@drawable/background"
     android:scaleType="centerCrop"
     tools:context=".Settings">
 
@@ -14,8 +14,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:backgroundTint="#00BCD4"
+        android:backgroundTint="#E91E63"
         android:text="Submit"
+        app:shapeAppearance="@style/CustomShapeAppearance"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.465"

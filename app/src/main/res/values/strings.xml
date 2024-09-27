@@ -3,10 +3,15 @@
     <string name="welcome_part1">Make your todo in the note and</string>
     <string name="welcome_part2">manage your priority activity in</string>
     <string name="welcome_part3">daily life to achieve goals.</string>
-    <string name="settings" />
     <string name="view_notes" />
     <string name="add_note" />
     <string name="this_app_was_developed_by_govindu_kamburugamuwa_d_bcs_22_0009">This App WAs Developed By Govindu kamburugamuwa (D/BCS/22/0009)</string>
+    <string name="views">Views</string>
+    <string name="account">Account</string>
+    <string name="home">Home</string>
+    <string name="settings">Settings</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

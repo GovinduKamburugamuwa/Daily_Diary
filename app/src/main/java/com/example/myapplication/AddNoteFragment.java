@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
@@ -11,20 +13,24 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 
-public class AddNoteActivity extends AppCompatActivity {
+public class AddNoteFragment extends Fragment {
     private EditText titleInput;
     private EditText descriptionInput;
     private NoteDbHelper dbHelper;
@@ -33,23 +39,25 @@ public class AddNoteActivity extends AppCompatActivity {
     private long selectedDate = 0;
     private long selectedTime = 0;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_note);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_add_note, container, false);
 
-        dbHelper = new NoteDbHelper(this);
-        titleInput = findViewById(R.id.titleinput);
-        descriptionInput = findViewById(R.id.descriptioninput);
-        MaterialButton saveBtn = findViewById(R.id.savebtn);
-        imgbtn = findViewById(R.id.imgbtn);
-        ImageButton datebtn = findViewById(R.id.datebtn);
-        ImageButton timebtn = findViewById(R.id.timebtn);
+        dbHelper = new NoteDbHelper(requireContext());
+        titleInput = view.findViewById(R.id.titleinput);
+        descriptionInput = view.findViewById(R.id.descriptioninput);
+        MaterialButton saveBtn = view.findViewById(R.id.savebtn);
+        imgbtn = view.findViewById(R.id.imgbtn);
+        ImageButton datebtn = view.findViewById(R.id.datebtn);
+        ImageButton timebtn = view.findViewById(R.id.timebtn);
 
         imgbtn.setOnClickListener(v -> openGallery());
         datebtn.setOnClickListener(v -> showDatePicker());
         timebtn.setOnClickListener(v -> showTimePicker());
         saveBtn.setOnClickListener(v -> saveNoteAndFinish());
+
+        return view;
     }
 
     private void showDatePicker() {
@@ -58,7 +66,7 @@ public class AddNoteActivity extends AppCompatActivity {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year1, monthOfYear, dayOfMonth) -> {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), (view, year1, monthOfYear, dayOfMonth) -> {
             Calendar selectedCalendar = Calendar.getInstance();
             selectedCalendar.set(year1, monthOfYear, dayOfMonth);
             selectedDate = selectedCalendar.getTimeInMillis();
@@ -72,7 +80,7 @@ public class AddNoteActivity extends AppCompatActivity {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this, (view, hourOfDay, minute1) -> {
+        TimePickerDialog timePickerDialog = new TimePickerDialog(requireContext(), (view, hourOfDay, minute1) -> {
             Calendar selectedCalendar = Calendar.getInstance();
             selectedCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
             selectedCalendar.set(Calendar.MINUTE, minute1);
@@ -88,7 +96,7 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE && data != null) {
             Uri selectedImage = data.getData();
@@ -105,7 +113,7 @@ public class AddNoteActivity extends AppCompatActivity {
         if (imgbtn.getDrawable() != null) {
             imageData = getBytesFromImageView(imgbtn);
         } else {
-            BitmapDrawable drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.default_image);
+            BitmapDrawable drawable = (BitmapDrawable) requireContext().getResources().getDrawable(R.drawable.default_image);
             Bitmap bitmap = drawable.getBitmap();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -113,7 +121,7 @@ public class AddNoteActivity extends AppCompatActivity {
         }
 
         if (title.isEmpty() || description.isEmpty()) {
-            Toast.makeText(this, "Please enter a title and description", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Please enter a title and description", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -126,17 +134,20 @@ public class AddNoteActivity extends AppCompatActivity {
         values.put(NoteContract.NoteEntry.COLUMN_DATE, selectedDate);
         values.put(NoteContract.NoteEntry.COLUMN_TIME, selectedTime);
 
-        Log.d("AddNoteActivity", "Title: " + title);
-        Log.d("AddNoteActivity", "Description: " + description);
-        Log.d("AddNoteActivity", "Created Time: " + createdTime);
-        Log.d("AddNoteActivity", "Image Data Size: " + (imageData != null ? imageData.length : 0));
+        Log.d("AddNoteFragment", "Title: " + title);
+        Log.d("AddNoteFragment", "Description: " + description);
+        Log.d("AddNoteFragment", "Created Time: " + createdTime);
+        Log.d("AddNoteFragment", "Image Data Size: " + (imageData != null ? imageData.length : 0));
 
         long newRowId = database.insert(NoteContract.NoteEntry.TABLE_NAME, null, values);
         if (newRowId == -1) {
-            Toast.makeText(this, "Failed to save note", Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireContext(), "Failed to save note", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Note saved", Toast.LENGTH_SHORT).show();
-            finish(); // Close the activity and return to the previous screen
+            Toast.makeText(requireContext(), "Note saved", Toast.LENGTH_SHORT).show();
+            // Navigate back to the previous fragment or update the UI as needed
+            if (getActivity() != null) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
         }
     }
 
@@ -148,8 +159,10 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        dbHelper.close();
+    public void onDestroy() {
         super.onDestroy();
+        if (dbHelper != null) {
+            dbHelper.close();
+        }
     }
 }

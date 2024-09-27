@@ -11,7 +11,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="@drawable/sign_page"
+    android:background="@drawable/backgrond_basic"
     android:scaleType="centerCrop"
     tools:context=".AddNoteActivity">
 
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/rounded_cornerblue"
+        android:background="@drawable/rounded_cornerred"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -98,12 +98,13 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/savebtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="131dp"
+        android:layout_height="54dp"
         android:layout_gravity="center"
-        android:backgroundTint="#00BCD4"
+        android:backgroundTint="@color/light_red"
         android:text="SAVE NOTE"
-        android:textColor="#FCFEFF" />
+        android:textColor="#FCFEFF"
+        app:shapeAppearance="@style/CustomShapeAppearance" />
 
 </LinearLayout>
 

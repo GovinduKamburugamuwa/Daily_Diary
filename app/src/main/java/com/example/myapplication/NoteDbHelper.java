@@ -37,7 +37,19 @@ public class NoteDbHelper extends SQLiteOpenHelper {
     public void deleteNote(long noteId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(NoteContract.NoteEntry.TABLE_NAME, NoteContract.NoteEntry._ID + " = ?", new String[]{String.valueOf(noteId)});
-        db.close();
+    }
+
+    public Cursor getAllNotes() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(
+                NoteContract.NoteEntry.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                NoteContract.NoteEntry.COLUMN_CREATED_TIME + " DESC"
+        );
     }
 
     public void printTableStructure() {
@@ -48,7 +60,7 @@ public class NoteDbHelper extends SQLiteOpenHelper {
         StringBuilder builder = new StringBuilder();
         builder.append("Table Structure for ").append(NoteContract.NoteEntry.TABLE_NAME).append(":\n");
 
-        if (((Cursor) cursor).moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
                 int columnIndex = cursor.getColumnIndex("name");
                 String columnName = cursor.getString(columnIndex);
@@ -61,5 +73,4 @@ public class NoteDbHelper extends SQLiteOpenHelper {
 
         Log.d("NoteDbHelper", builder.toString());
     }
-
 }

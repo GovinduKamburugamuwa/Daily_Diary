@@ -7,21 +7,22 @@
     android:layout_height="match_parent"
     android:background="@drawable/backgrond_basic"
     android:scaleType="centerCrop"
-    tools:context=".Settings">
+    tools:context=".SettingsFragment">
 
     <Button
         android:id="@+id/subbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="114dp"
+        android:layout_height="57dp"
         android:layout_marginTop="35dp"
-        android:backgroundTint="#00BCD4"
+        android:backgroundTint="@color/light_red"
         android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.465"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextText"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        app:shapeAppearance="@style/CustomShapeAppearance" />
 
     <EditText
         android:id="@+id/editTextText"
@@ -34,7 +35,7 @@
         android:ems="10"
         android:inputType="text"
         android:paddingLeft="10dp"
-        android:text="Name"
+        android:hint="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,14 +45,16 @@
         android:id="@+id/settext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="92dp"
         android:fontFamily="@font/dancingscript_variablefont_wght"
         android:gravity="center"
         android:text="@string/this_app_was_developed_by_govindu_kamburugamuwa_d_bcs_22_0009"
         android:textColor="#101010"
         android:textSize="34sp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -66,6 +69,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settext"
         app:srcCompat="@drawable/profile" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

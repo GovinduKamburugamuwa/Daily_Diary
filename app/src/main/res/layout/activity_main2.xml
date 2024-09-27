@@ -5,9 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sign_page"
+    android:background="@drawable/backgrond_basic"
     android:scaleType="centerCrop"
-    tools:context=".HomeScreen">
+    tools:context=".HomeFragment">
 
 
     <ImageView
@@ -20,44 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="-5dp" />
 
-    <Button
-        android:id="@+id/setbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="25dp"
-        android:layout_marginBottom="60dp"
-        android:backgroundTint="#00BCD4"
-        android:text="Settings"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/addrbtn" />
 
-    <Button
-        android:id="@+id/shwvwbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="60dp"
-        android:backgroundTint="#00BCD4"
-        android:text="View Diary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/addrbtn"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/addrbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="60dp"
-        android:backgroundTint="#00BCD4"
-        android:text="Add New Entry"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/setbtn"
-        app:layout_constraintStart_toEndOf="@+id/shwvwbtn" />
 
     <TextView
         android:id="@+id/textView3"

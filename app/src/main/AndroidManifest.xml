@@ -15,16 +15,7 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".HomeScreen"
-            android:exported="false" />
-        <activity
-            android:name=".Settings"
-            android:exported="false" />
-        <activity
-            android:name=".ViewScreen"
-            android:exported="true" />
-        <activity
-            android:name=".AddNoteActivity"
+            android:name=".MainActivity"
             android:exported="true" />
         <activity
             android:name=".LoginPage"

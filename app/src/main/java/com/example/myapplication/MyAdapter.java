@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,13 +18,18 @@ import java.util.Date;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private Cursor cursor;
-    private ViewScreen activity;
+    private Context context;
+    private NoteDbHelper dbHelper;
 
-    public MyAdapter(ViewScreen activity) {
-        this.activity = activity;
+    public MyAdapter(Context context, NoteDbHelper dbHelper) {
+        this.context = context;
+        this.dbHelper = dbHelper;
     }
 
     public void setCursor(Cursor cursor) {
+        if (this.cursor != null) {
+            this.cursor.close();
+        }
         this.cursor = cursor;
         notifyDataSetChanged();
     }
@@ -31,13 +37,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        NoteDbHelper dbHelper = new NoteDbHelper(parent.getContext());
-        return new MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false), dbHelper, activity);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view, parent, false);
+        return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        if (cursor.moveToPosition(position)) {
+        if (cursor != null && cursor.moveToPosition(position)) {
             String title = cursor.getString(cursor.getColumnIndexOrThrow(NoteContract.NoteEntry.COLUMN_TITLE));
             String description = cursor.getString(cursor.getColumnIndexOrThrow(NoteContract.NoteEntry.COLUMN_DESCRIPTION));
             long createdTime = cursor.getLong(cursor.getColumnIndexOrThrow(NoteContract.NoteEntry.COLUMN_CREATED_TIME));
@@ -48,15 +54,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             holder.titleOutput.setText(title);
             holder.descriptionOutput.setText(description);
 
-            // Format the created time
             String formattedCreatedTime = DateFormat.getDateTimeInstance().format(new Date(createdTime));
             holder.timeOutput.setText(formattedCreatedTime);
 
-            // Format the date and time
             String formattedDate = DateFormat.getDateInstance().format(new Date(date));
             String formattedTime = DateFormat.getTimeInstance().format(new Date(time));
-            holder.dateOutput.setText(formattedDate);
-            holder.timeOutput.setText(formattedTime);
+            holder.dateOutput.setText(formattedDate + " " + formattedTime);
 
             if (imageData != null) {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
@@ -64,6 +67,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             } else {
                 holder.imageView.setImageResource(R.drawable.default_image);
             }
+
+            holder.deleteButton.setOnClickListener(v -> {
+                long noteId = cursor.getLong(cursor.getColumnIndexOrThrow(NoteContract.NoteEntry._ID));
+                dbHelper.deleteNote(noteId);
+                refreshData();
+            });
         }
     }
 
@@ -72,37 +81,27 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return cursor != null ? cursor.getCount() : 0;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public void refreshData() {
+        Cursor newCursor = dbHelper.getAllNotes();
+        setCursor(newCursor);
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView titleOutput;
         TextView descriptionOutput;
         TextView timeOutput;
         TextView dateOutput;
         ImageView deleteButton;
         ImageView imageView;
-        NoteDbHelper dbHelper;
-        ViewScreen activity;
 
-        public MyViewHolder(@NonNull View itemView, NoteDbHelper dbHelper, ViewScreen activity) {
+        public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.dbHelper = dbHelper;
-            this.activity = activity;
             titleOutput = itemView.findViewById(R.id.titleoutput);
             descriptionOutput = itemView.findViewById(R.id.descriptionoutput);
             timeOutput = itemView.findViewById(R.id.timeoutput);
             dateOutput = itemView.findViewById(R.id.dateoutput);
             deleteButton = itemView.findViewById(R.id.delbtn);
             imageView = itemView.findViewById(R.id.noteImageView);
-
-            deleteButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAdapterPosition();
-                    cursor.moveToPosition(position);
-                    long noteId = cursor.getLong(cursor.getColumnIndexOrThrow(NoteContract.NoteEntry._ID));
-                    dbHelper.deleteNote(noteId);
-                    activity.loadNotes();
-                }
-            });
         }
     }
 }

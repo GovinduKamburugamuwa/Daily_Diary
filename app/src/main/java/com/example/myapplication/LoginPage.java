@@ -7,11 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.codec.binary.Hex;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.codec.digest.DigestUtils;
@@ -25,14 +21,7 @@ public class LoginPage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login_page);
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
 
@@ -56,7 +45,8 @@ public class LoginPage extends AppCompatActivity {
             }
 
             if (checkCredentials(username, password)) {
-                navigateToMainActivity2(username);  // Pass the username here
+                saveLoggedInUser(username);  // Save the logged-in user
+                navigateToMainActivity2(username);
             } else {
                 showToast("Invalid username or password.");
             }
@@ -77,20 +67,21 @@ public class LoginPage extends AppCompatActivity {
         return Hex.encodeHexString(hash);
     }
 
-    private void navigateToMainActivity2() {
-        Intent intent = new Intent(this, HomeScreen.class);
-        startActivity(intent);
-        finish(); // Close the login activity
-    }
-
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void navigateToMainActivity2(String username) {
-        Intent intent = new Intent(this, HomeScreen.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("username", username);
         startActivity(intent);
         finish(); // Close the login activity
+    }
+
+    // Save the logged-in user in SharedPreferences
+    private void saveLoggedInUser(String username) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("loggedInUser", username);
+        editor.apply();
     }
 }

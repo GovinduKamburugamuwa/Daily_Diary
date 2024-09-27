@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
-    android:background="@drawable/rounded_corner"
-    android:backgroundTint="#00BCD4"
+    android:background="@drawable/rounded_cornerred"
+    android:backgroundTint="@color/light_red"
     android:padding="10dp">
 
     <ImageView
@@ -56,8 +56,8 @@
         android:id="@+id/delbtn"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_alignParentEnd="true"
         android:layout_below="@id/dateoutput"
+        android:layout_alignParentEnd="true"
         android:layout_marginEnd="8dp"
         android:contentDescription="Delete"
         android:src="@drawable/delete" />

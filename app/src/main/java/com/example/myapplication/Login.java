@@ -8,11 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.codec.binary.Hex;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.codec.digest.DigestUtils;
@@ -25,14 +21,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
 
@@ -70,7 +59,7 @@ public class Login extends AppCompatActivity {
 
                 if (saveCredentials(username, password)) {
                     showToast("Account has been created");
-                    navigateToMainActivity2();
+                    navigateToLoginPage();
                 } else {
                     showToast("Error creating account");
                 }
@@ -103,9 +92,9 @@ public class Login extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    private void navigateToMainActivity2() {
-        Intent intent = new Intent(this, HomeScreen.class);
+    private void navigateToLoginPage() {
+        Intent intent = new Intent(this, LoginPage.class);
         startActivity(intent);
-        finish();
+        finish(); // Close the registration activity
     }
 }

@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    android:background="@drawable/background"
+    android:background="@drawable/backgrond_basic"
     android:scaleType="centerCrop"
-    tools:context=".ViewScreen">
+    tools:context=".ViewScreenFragment">
 
     <TextView
         android:id="@+id/notestitle"
@@ -24,15 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/addnewnotebtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#E91E63"
-        android:text="Add new note"
-        app:shapeAppearance="@style/CustomShapeAppearance"
-        android:textColor="#FCFEFF" />
 
 
 </LinearLayout>

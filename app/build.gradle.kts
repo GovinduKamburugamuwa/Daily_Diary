@@ -29,6 +29,9 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding  = true
+    }
 }
 
 dependencies {
@@ -41,8 +44,8 @@ dependencies {
     implementation(libs.volley)
     implementation (libs.glide)
     implementation (libs.material)
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.8.0")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.8.0")
     implementation ("com.google.android.material:material:1.8.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

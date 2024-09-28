@@ -13,9 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 public class SettingsFragment extends Fragment {
-
-    private EditText editTextText;
-    private Button subbtn;
+    private EditText nameEditText;
+    private Button submitButton;
     private OnSettingsSubmitListener listener;
 
     public interface OnSettingsSubmitListener {
@@ -37,13 +36,13 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        editTextText = view.findViewById(R.id.editTextText);
-        subbtn = view.findViewById(R.id.subbtn);
+        nameEditText = view.findViewById(R.id.nameEditText);
+        submitButton = view.findViewById(R.id.submitButton);
 
-        subbtn.setOnClickListener(v -> {
-            String userName = editTextText.getText().toString();
+        submitButton.setOnClickListener(v -> {
+            String userName = nameEditText.getText().toString();
             if (!userName.isEmpty() && listener != null) {
-                listener.onSettingsSubmit(userName);  // Submit the username to MainActivity
+                listener.onSettingsSubmit(userName);
             }
         });
 

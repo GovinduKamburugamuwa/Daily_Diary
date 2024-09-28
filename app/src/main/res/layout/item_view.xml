@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
     android:background="@drawable/rounded_cornerred"
-    android:backgroundTint="@color/light_red"
+    android:backgroundTint="@color/white"
     android:padding="10dp">
 
     <ImageView
@@ -19,7 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/noteImageView"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
+        android:fontFamily="@font/prata_regular"
         android:textSize="20sp"
         tools:text="My title" />
 
@@ -28,7 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/titleoutput"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/black"
+        android:fontFamily="@font/prata_regular"
         tools:text="My long long long description" />
 
     <TextView
@@ -37,7 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/descriptionoutput"
         android:gravity="end"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/black"
+        android:fontFamily="@font/prata_regular"
         android:textColorHint="#9C7979"
         android:textSize="12sp"
         tools:text="Jan 21 2020 " />
@@ -48,7 +51,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/timeoutput"
         android:layout_alignParentEnd="true"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/black"
+        android:fontFamily="@font/prata_regular"
         android:textSize="12sp"
         tools:text="21/05/2023" />
 

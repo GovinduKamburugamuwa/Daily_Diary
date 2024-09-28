@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgrond_basic"
+    android:background="@drawable/gradient_background"
     android:scaleType="centerCrop"
     tools:context=".HomeFragment">
 
@@ -30,10 +30,10 @@
         android:layout_marginTop="86dp"
         android:layout_marginEnd="17dp"
         android:layout_marginBottom="54dp"
-        android:fontFamily="@font/madimione_regular"
+        android:fontFamily="@font/aclonica_regular"
         android:text="Welcome Govindu"
         android:textColor="#FFFFFF"
-        android:textSize="48sp"
+        android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/dailyImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.432"

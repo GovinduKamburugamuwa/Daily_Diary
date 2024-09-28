@@ -47,6 +47,7 @@ dependencies {
     implementation ("androidx.navigation:navigation-fragment-ktx:2.8.0")
     implementation ("androidx.navigation:navigation-ui-ktx:2.8.0")
     implementation ("com.google.android.material:material:1.8.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

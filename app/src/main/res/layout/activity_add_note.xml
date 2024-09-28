@@ -11,7 +11,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="@drawable/backgrond_basic"
+    android:background="@drawable/gradient_background"
     android:scaleType="centerCrop"
     tools:context=".AddNoteActivity">
 
@@ -20,10 +20,11 @@
         android:id="@+id/titletextview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="25dp"
         android:gravity="center"
         android:text="Add new note"
         android:textColor="#FFFFFF"
+        android:fontFamily="@font/aclonica_regular"
         android:textSize="25dp"
         android:textStyle="normal" />
 
@@ -31,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/rounded_cornerred"
+        android:background="@drawable/rounded_corner"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -40,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="#FDFEFF"
+            android:background="@drawable/rounded_edittext"
             android:hint="Title"
             android:padding="10dp"
             android:textColor="#000000" />
@@ -50,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="318dp"
             android:layout_margin="10dp"
-            android:background="#FFFFFF"
+            android:background="@drawable/rounded_edittext"
             android:gravity="top"
             android:hint="Decription"
             android:lines="10"
@@ -76,12 +77,14 @@
 
             <ImageButton
                 android:id="@+id/datebtn"
-                android:layout_width="44dp"
-                android:layout_height="48dp"
+                android:layout_width="43dp"
+                android:layout_height="46dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/date"
-                app:srcCompat="@drawable/date" />
+                android:background="@null"
+                android:contentDescription="Select date"
+                android:scaleType="fitCenter"
+                android:src="@drawable/date" />
 
             <ImageButton
                 android:id="@+id/timebtn"

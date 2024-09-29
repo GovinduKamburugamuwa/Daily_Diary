@@ -9,7 +9,8 @@ activity = "1.8.0"
 constraintlayout = "2.1.4"
 firebaseCrashlyticsBuildtools = "2.9.9"
 volley = "1.2.1"
-glide = "4.14.2" # Added Glide version
+glide = "4.14.2"
+generativeai = "0.9.0" # Added Glide version
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -22,7 +23,8 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
 volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" } # Added Glide library
-glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" } # Added Glide compiler
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version.ref = "generativeai" } # Added Glide compiler
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

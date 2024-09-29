@@ -32,6 +32,24 @@ android {
     buildFeatures {
         viewBinding  = true
     }
+
+        packagingOptions {
+            resources {
+                excludes += listOf(
+                    "META-INF/DEPENDENCIES",
+                    "META-INF/LICENSE",
+                    "META-INF/LICENSE.txt",
+                    "META-INF/license.txt",
+                    "META-INF/NOTICE",
+                    "META-INF/NOTICE.txt",
+                    "META-INF/notice.txt",
+                    "META-INF/ASL2.0",
+                    "META-INF/*.kotlin_module",
+                    "META-INF/INDEX.LIST" , // Add this line
+                    "mozilla/public-suffix-list.txt"
+                )
+            }
+        }
 }
 
 dependencies {
@@ -48,6 +66,9 @@ dependencies {
     implementation ("androidx.navigation:navigation-ui-ktx:2.8.0")
     implementation ("com.google.android.material:material:1.8.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation ("com.google.cloud:google-cloud-aiplatform:3.3.0")
+    implementation ("com.google.ai.client.generativeai:generativeai:0.1.1")
+    implementation(libs.generativeai)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

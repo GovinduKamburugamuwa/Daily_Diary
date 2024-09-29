@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
             } else if (itemId == R.id.settings) {
                 replaceFragment(new SettingsFragment());
             } else if (itemId == R.id.accounts) {
-                replaceFragment(new AccountFragment());
+                replaceFragment(new ChatbotFragment());
             }
             return true;
         });

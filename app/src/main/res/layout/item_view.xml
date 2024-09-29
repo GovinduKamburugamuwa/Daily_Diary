@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/noteImageView"
         android:textColor="@color/black"
-        android:fontFamily="@font/prata_regular"
+        android:fontFamily="@font/aclonica_regular"
         android:textSize="20sp"
         tools:text="My title" />
 

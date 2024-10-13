@@ -67,7 +67,8 @@ dependencies {
     implementation ("com.google.android.material:material:1.8.0")
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.google.cloud:google-cloud-aiplatform:3.3.0")
-    implementation ("com.google.ai.client.generativeai:generativeai:0.1.1")
+    implementation ("org.json:json:20210307")
+
     implementation(libs.generativeai)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

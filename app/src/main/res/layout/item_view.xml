@@ -75,7 +75,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="38dp"
-        android:contentDescription="Delete"
+        android:contentDescription="edit"
         android:src="@drawable/pencil" />
 
 </RelativeLayout>

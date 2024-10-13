@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ViewScreenFragment extends Fragment {
+public class ViewScreenFragment extends Fragment implements MyAdapter.OnItemClickListener {
     private RecyclerView recyclerView;
     private MyAdapter adapter;
     private NoteDbHelper dbHelper;
@@ -30,6 +30,7 @@ public class ViewScreenFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         adapter = new MyAdapter(requireContext(), dbHelper);
+        adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
 
         return view;
@@ -54,6 +55,24 @@ public class ViewScreenFragment extends Fragment {
                     NoteContract.NoteEntry.COLUMN_CREATED_TIME + " DESC"
             );
             adapter.setCursor(cursor);
+        }
+    }
+
+    @Override
+    public void onEditClick(long noteId, String title, String description, byte[] imageData, long date, long time) {
+        EditNoteFragment editNoteFragment = EditNoteFragment.newInstance(noteId, title, description, imageData, date, time);
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_layout, editNoteFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (adapter != null) {
+            adapter.setCursor(null);
         }
     }
 }

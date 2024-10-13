@@ -20,6 +20,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private Cursor cursor;
     private Context context;
     private NoteDbHelper dbHelper;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onEditClick(long noteId, String title, String description, byte[] imageData, long date, long time);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public MyAdapter(Context context, NoteDbHelper dbHelper) {
         this.context = context;
@@ -44,6 +53,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         if (cursor != null && cursor.moveToPosition(position)) {
+            long noteId = cursor.getLong(cursor.getColumnIndexOrThrow(NoteContract.NoteEntry._ID));
             String title = cursor.getString(cursor.getColumnIndexOrThrow(NoteContract.NoteEntry.COLUMN_TITLE));
             String description = cursor.getString(cursor.getColumnIndexOrThrow(NoteContract.NoteEntry.COLUMN_DESCRIPTION));
             long createdTime = cursor.getLong(cursor.getColumnIndexOrThrow(NoteContract.NoteEntry.COLUMN_CREATED_TIME));
@@ -69,9 +79,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             }
 
             holder.deleteButton.setOnClickListener(v -> {
-                long noteId = cursor.getLong(cursor.getColumnIndexOrThrow(NoteContract.NoteEntry._ID));
                 dbHelper.deleteNote(noteId);
                 refreshData();
+            });
+
+            holder.editButton.setOnClickListener(v -> {
+                if (mListener != null) {
+                    mListener.onEditClick(noteId, title, description, imageData, date, time);
+                }
             });
         }
     }
@@ -92,6 +107,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         TextView timeOutput;
         TextView dateOutput;
         ImageView deleteButton;
+        ImageView editButton;
         ImageView imageView;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -101,6 +117,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             timeOutput = itemView.findViewById(R.id.timeoutput);
             dateOutput = itemView.findViewById(R.id.dateoutput);
             deleteButton = itemView.findViewById(R.id.delbtn);
+            editButton = itemView.findViewById(R.id.pencil);
             imageView = itemView.findViewById(R.id.noteImageView);
         }
     }

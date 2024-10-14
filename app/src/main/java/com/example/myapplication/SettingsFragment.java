@@ -19,6 +19,8 @@ public class SettingsFragment extends Fragment {
 
     public interface OnSettingsSubmitListener {
         void onSettingsSubmit(String userName);
+
+        void passChatToNote(String chatContent);
     }
 
     @Override

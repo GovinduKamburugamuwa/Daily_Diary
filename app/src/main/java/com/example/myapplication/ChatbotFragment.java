@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.button.MaterialButton;
 import com.google.ai.client.generativeai.GenerativeModel;
 import com.google.ai.client.generativeai.java.GenerativeModelFutures;
 import com.google.ai.client.generativeai.type.Content;
@@ -31,15 +33,23 @@ public class ChatbotFragment extends Fragment {
     private RecyclerView chatRecyclerView;
     private TextInputEditText messageInput;
     private ImageButton sendButton;
+    private MaterialButton saveToNoteButton;
     private List<ChatMessage> chatMessages;
     private ChatAdapter chatAdapter;
     private GenerativeModelFutures model;
     private ExecutorService executorService;
+    private ChatToNoteInterface chatToNoteInterface;
 
     private static final String API_KEY = "AIzaSyCgiLwTGCQAnLvvpioaS3T4sMeuBXeVYZM"; // Replace with your actual API key
 
-    public ChatbotFragment() {
-        // Required empty public constructor
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof ChatToNoteInterface) {
+            chatToNoteInterface = (ChatToNoteInterface) context;
+        } else {
+            throw new RuntimeException(context.toString() + " must implement ChatToNoteInterface");
+        }
     }
 
     @Override
@@ -55,6 +65,7 @@ public class ChatbotFragment extends Fragment {
         chatRecyclerView = view.findViewById(R.id.chatRecyclerView);
         messageInput = view.findViewById(R.id.messageInput);
         sendButton = view.findViewById(R.id.sendButton);
+        saveToNoteButton = view.findViewById(R.id.saveToNoteButton);
 
         chatMessages = new ArrayList<>();
         chatAdapter = new ChatAdapter(chatMessages);
@@ -63,12 +74,16 @@ public class ChatbotFragment extends Fragment {
         chatRecyclerView.setAdapter(chatAdapter);
 
         sendButton.setOnClickListener(v -> sendMessage());
+        saveToNoteButton.setOnClickListener(v -> saveToNote());
 
-        // Initialize Gemini model
-        GenerativeModel gm = new GenerativeModel("gemini-pro", API_KEY);
-        model = GenerativeModelFutures.from(gm);
-
-        executorService = Executors.newSingleThreadExecutor();
+        try {
+            GenerativeModel gm = new GenerativeModel("gemini-pro", API_KEY);
+            model = GenerativeModelFutures.from(gm);
+            executorService = Executors.newSingleThreadExecutor();
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle initialization error
+        }
     }
 
     private void sendMessage() {
@@ -87,10 +102,10 @@ public class ChatbotFragment extends Fragment {
                             .build();
                     GenerateContentResponse response = model.generateContent(content).get();
                     String botResponse = response.getText();
-                    getActivity().runOnUiThread(() -> sendBotResponse(botResponse));
+                    requireActivity().runOnUiThread(() -> sendBotResponse(botResponse));
                 } catch (Exception e) {
                     e.printStackTrace();
-                    getActivity().runOnUiThread(() -> sendBotResponse("Sorry, I couldn't process that request."));
+                    requireActivity().runOnUiThread(() -> sendBotResponse("Sorry, I couldn't process that request."));
                 }
             });
         }
@@ -102,13 +117,22 @@ public class ChatbotFragment extends Fragment {
         chatRecyclerView.smoothScrollToPosition(chatMessages.size() - 1);
     }
 
+    private void saveToNote() {
+        StringBuilder chatContent = new StringBuilder();
+        for (ChatMessage message : chatMessages) {
+            chatContent.append(message.isUser ? "User: " : "Bot: ")
+                    .append(message.message)
+                    .append("\n");
+        }
+        chatToNoteInterface.passChatToNote(chatContent.toString());
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         executorService.shutdown();
     }
 
-    // Inner classes for ChatMessage and ChatAdapter
     private static class ChatMessage {
         String message;
         boolean isUser;
@@ -154,7 +178,6 @@ public class ChatbotFragment extends Fragment {
 
             void bind(ChatMessage message) {
                 messageText.setText(message.message);
-
                 if (message.isUser) {
                     messageText.setBackgroundResource(R.drawable.user_message_bubble);
                     ((LinearLayout.LayoutParams) messageText.getLayoutParams()).gravity = Gravity.END;

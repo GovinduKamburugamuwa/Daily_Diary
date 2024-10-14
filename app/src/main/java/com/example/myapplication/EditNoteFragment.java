@@ -39,6 +39,8 @@ public class EditNoteFragment extends Fragment {
     private long selectedTime = 0;
     private static final int PICK_IMAGE = 1;
 
+
+
     public static EditNoteFragment newInstance(long noteId, String title, String description, byte[] imageData, long date, long time) {
         EditNoteFragment fragment = new EditNoteFragment();
         Bundle args = new Bundle();

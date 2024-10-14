@@ -39,6 +39,16 @@ public class AddNoteFragment extends Fragment {
     private long selectedDate = 0;
     private long selectedTime = 0;
 
+    private static final String ARG_CHAT_CONTENT = "chat_content";
+
+    public static AddNoteFragment newInstance(String chatContent) {
+        AddNoteFragment fragment = new AddNoteFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_CHAT_CONTENT, chatContent);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -57,6 +67,14 @@ public class AddNoteFragment extends Fragment {
         timebtn.setOnClickListener(v -> showTimePicker());
         saveBtn.setOnClickListener(v -> saveNoteAndFinish());
 
+        if (getArguments() != null) {
+            String chatContent = getArguments().getString(ARG_CHAT_CONTENT);
+            if (chatContent != null && !chatContent.isEmpty()) {
+                descriptionInput.setText(chatContent);
+                titleInput.setText("Chat Note"); // Set a default title
+            }
+        }
+
         return view;
     }
 
@@ -66,27 +84,26 @@ public class AddNoteFragment extends Fragment {
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(), (view, year1, monthOfYear, dayOfMonth) -> {
-            Calendar selectedCalendar = Calendar.getInstance();
-            selectedCalendar.set(year1, monthOfYear, dayOfMonth);
-            selectedDate = selectedCalendar.getTimeInMillis();
-        }, year, month, day);
-
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(),
+                (view, year1, monthOfYear, dayOfMonth) -> {
+                    Calendar selectedCalendar = Calendar.getInstance();
+                    selectedCalendar.set(year1, monthOfYear, dayOfMonth);
+                    selectedDate = selectedCalendar.getTimeInMillis();
+                }, year, month, day);
         datePickerDialog.show();
     }
-
     private void showTimePicker() {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
 
-        TimePickerDialog timePickerDialog = new TimePickerDialog(requireContext(), (view, hourOfDay, minute1) -> {
-            Calendar selectedCalendar = Calendar.getInstance();
-            selectedCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            selectedCalendar.set(Calendar.MINUTE, minute1);
-            selectedTime = selectedCalendar.getTimeInMillis();
-        }, hour, minute, false);
-
+        TimePickerDialog timePickerDialog = new TimePickerDialog(requireContext(),
+                (view, hourOfDay, minute1) -> {
+                    Calendar selectedCalendar = Calendar.getInstance();
+                    selectedCalendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                    selectedCalendar.set(Calendar.MINUTE, minute1);
+                    selectedTime = selectedCalendar.getTimeInMillis();
+                }, hour, minute, false);
         timePickerDialog.show();
     }
 
@@ -103,13 +120,12 @@ public class AddNoteFragment extends Fragment {
             imgbtn.setImageURI(selectedImage);
         }
     }
-
     private void saveNoteAndFinish() {
         String title = titleInput.getText().toString().trim();
         String description = descriptionInput.getText().toString().trim();
         long createdTime = System.currentTimeMillis();
-        byte[] imageData;
 
+        byte[] imageData;
         if (imgbtn.getDrawable() != null) {
             imageData = getBytesFromImageView(imgbtn);
         } else {
@@ -125,6 +141,10 @@ public class AddNoteFragment extends Fragment {
             return;
         }
 
+        // Add a hint that this note was taken from the chatbot
+        if (getArguments() != null && getArguments().containsKey(ARG_CHAT_CONTENT)) {
+            description += "\n\n[Note: This content was taken from a chat with the AI assistant.]";
+        }
         SQLiteDatabase database = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(NoteContract.NoteEntry.COLUMN_TITLE, title);
@@ -140,6 +160,7 @@ public class AddNoteFragment extends Fragment {
         Log.d("AddNoteFragment", "Image Data Size: " + (imageData != null ? imageData.length : 0));
 
         long newRowId = database.insert(NoteContract.NoteEntry.TABLE_NAME, null, values);
+
         if (newRowId == -1) {
             Toast.makeText(requireContext(), "Failed to save note", Toast.LENGTH_SHORT).show();
         } else {
@@ -157,6 +178,7 @@ public class AddNoteFragment extends Fragment {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         return stream.toByteArray();
     }
+
 
     @Override
     public void onDestroy() {

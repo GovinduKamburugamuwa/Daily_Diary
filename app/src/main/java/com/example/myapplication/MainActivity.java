@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.myapplication.databinding.ActivityMainHomeBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class MainActivity extends AppCompatActivity implements SettingsFragment.OnSettingsSubmitListener {
+public class MainActivity extends AppCompatActivity implements SettingsFragment.OnSettingsSubmitListener, ChatToNoteInterface {
     private ActivityMainHomeBinding binding;
     private SharedPreferences sharedPreferences;
     private String currentUsername;
@@ -80,6 +80,12 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
         editor.putString("loggedInUser", userName);
         editor.apply();
         currentUsername = userName;
+    }
+
+    @Override
+    public void passChatToNote(String chatContent) {
+        AddNoteFragment addNoteFragment = AddNoteFragment.newInstance(chatContent);
+        replaceFragment(addNoteFragment);
     }
 
     @Override

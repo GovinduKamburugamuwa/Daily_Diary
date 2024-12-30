@@ -5,4 +5,8 @@
         <item name="cornerSizeTopLeft">50dp</item>
         <item name="cornerSizeBottomRight">50dp</item>
     </style>
+    <style name="CircleImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

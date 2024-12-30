@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background circle -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#EFEFEF" />
+            <size
+                android:width="120dp"
+                android:height="120dp" />
+        </shape>
+    </item>
+
+    <!-- Default profile icon -->
+    <item
+        android:width="60dp"
+        android:height="60dp"
+        android:gravity="center">
+        <shape android:shape="oval">
+            <solid android:color="#CCCCCC" />
+        </shape>
+    </item>
+
+    <!-- Head circle -->
+    <item
+        android:width="24dp"
+        android:height="24dp"
+        android:gravity="center"
+        android:top="20dp">
+        <shape android:shape="oval">
+            <solid android:color="#EFEFEF" />
+        </shape>
+    </item>
+
+    <!-- Body shape -->
+    <item
+        android:width="40dp"
+        android:height="30dp"
+        android:gravity="center"
+        android:top="45dp">
+        <shape android:shape="rectangle">
+            <corners android:radius="20dp" />
+            <solid android:color="#EFEFEF" />
+        </shape>
+    </item>
+</layer-list>

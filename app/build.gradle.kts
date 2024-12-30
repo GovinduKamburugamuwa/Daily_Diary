@@ -68,6 +68,8 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation ("com.google.cloud:google-cloud-aiplatform:3.3.0")
     implementation ("org.json:json:20210307")
+    implementation ("com.google.android.material:material:1.5.0")
+    implementation ("androidx.cardview:cardview:1.0.0")
 
     implementation(libs.generativeai)
     testImplementation(libs.junit)

@@ -5,103 +5,138 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/loginscreen"
-    android:scaleType="centerCrop"
+    android:background="@drawable/gradient_background"
     tools:context=".LoginPage">
 
-    <EditText
-        android:id="@+id/user2"
-        android:layout_width="248dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="240dp"
-        android:layout_marginEnd="113dp"
-        android:background="@drawable/edt_background"
-        android:drawableLeft="@drawable/baseline_person_24"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:hint="Username"
-        android:textColorHint="#FF989595"
-        android:inputType="text"
-        android:paddingLeft="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/pass2"
+    <!-- Profile Image Circle -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/profileImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="80dp"
+        android:background="#EFEFEF"
+        android:padding="5dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.184"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.871" />
+        app:shapeAppearanceOverlay="@style/CircleImageView"
+        app:strokeColor="#FFFFFF"
+        app:strokeWidth="2dp" />
 
-    <EditText
-        android:id="@+id/pass2"
-        android:layout_width="248dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="88dp"
-        android:layout_marginEnd="113dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/edt_background"
-        android:drawableLeft="@drawable/baseline_lock_24"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        android:paddingLeft="10dp"
-        android:hint="Enter Password"
-        app:layout_constraintBottom_toTopOf="@+id/logbtn1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.184"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/logbtn1"
-        android:layout_width="198dp"
-        android:layout_height="57dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginEnd="150dp"
-        android:layout_marginBottom="144dp"
-        android:text="Login"
-        android:textAlignment="center"
-        android:textColor="#ECDDDD"
-        android:textSize="20sp"
-        app:backgroundTint="#E91E63"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:shapeAppearance="@style/CustomShapeAppearance" />
-
-
+    <!-- Title Text -->
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
         android:layout_marginTop="40dp"
-        android:layout_marginBottom="82dp"
-        android:text="Don’t have an account ?"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Welcome Back"
+        android:textColor="#333333"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logbtn1"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@id/profileImage" />
 
-    <Button
-        android:id="@+id/regbtn"
+    <!-- Subtitle Text -->
+    <TextView
+        android:id="@+id/subtitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="72dp"
-        android:layout_marginBottom="52dp"
-        android:background="@android:color/transparent"
-        android:gravity="start|center_vertical"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
-        android:text="Register"
-        android:textColor="#E91E63"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
+        android:text="Please login to continue"
+        android:textColor="#666666"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/logbtn1"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleText" />
+
+    <!-- Card View for Input Fields -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="24dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="#99FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/subtitleText">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="40dp">
+
+            <!-- Username Input -->
+            <EditText
+                android:id="@+id/user2"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:background="@drawable/edt_background"
+                android:drawableLeft="@drawable/baseline_person_24"
+                android:drawablePadding="10dp"
+                android:hint="Username"
+                android:inputType="text"
+                android:paddingLeft="10dp"
+                android:textColorHint="#FF989595" />
+
+            <!-- Password Input -->
+            <EditText
+                android:id="@+id/pass2"
+                android:layout_width="match_parent"
+                android:layout_height="47dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edt_background"
+                android:drawableLeft="@drawable/baseline_lock_24"
+                android:drawablePadding="10dp"
+                android:hint="Enter Password"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                android:textColorHint="#FF989595" />
+
+            <!-- Login Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/logbtn1"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/gradient_button_background"
+                android:text="Login"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:backgroundTint="@null"
+                app:elevation="4dp"
+                app:strokeWidth="0dp" />
+
+            <!-- Register Section -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Don't have an account ?"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/regbtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:text="Register"
+                    android:textColor="#E91E63"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

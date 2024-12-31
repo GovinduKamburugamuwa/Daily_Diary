@@ -10,23 +10,26 @@
     tools:context=".Login">
 
     <!-- Profile Image Circle -->
+
+    <!-- Camera Icon for Image Selection -->
+
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profileImage"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="80dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="72dp"
         android:background="#EFEFEF"
         android:padding="5dp"
         android:scaleType="centerCrop"
         android:src="@drawable/profile_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/CircleImageView"
         app:strokeColor="#FFFFFF"
         app:strokeWidth="2dp" />
 
-    <!-- Camera Icon for Image Selection -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddPhoto"
         android:layout_width="wrap_content"
@@ -46,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="Create New Account"
+        android:fontFamily="@font/aclonica_regular"
         android:textColor="#333333"
         android:textSize="24sp"
         android:textStyle="bold"

@@ -9,31 +9,34 @@
     tools:context=".LoginPage">
 
     <!-- Profile Image Circle -->
+
+    <!-- Title Text -->
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/profileImage"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="80dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="44dp"
         android:background="#EFEFEF"
         android:padding="5dp"
         android:scaleType="centerCrop"
         android:src="@drawable/profile_placeholder"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/CircleImageView"
         app:strokeColor="#FFFFFF"
         app:strokeWidth="2dp" />
 
-    <!-- Title Text -->
     <TextView
         android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:fontFamily="@font/aclonica_regular"
         android:text="Welcome Back"
         android:textColor="#333333"
-        android:textSize="24sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Please login to continue"
-        android:textColor="#666666"
+        android:textColor="#000000"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -133,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:text="Register"
-                    android:textColor="#E91E63"
+                    android:textColor="#FF69B4"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>

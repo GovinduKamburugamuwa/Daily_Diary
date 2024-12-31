@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
     private String currentUsername;
     private NoteDbHelper dbHelper;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

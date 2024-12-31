@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +17,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.File;
 
 public class HomeFragment extends Fragment {
 
@@ -28,6 +33,7 @@ public class HomeFragment extends Fragment {
 
     private String loggedInUsername;
     private SharedPreferences sharedPreferences;
+    private ShapeableImageView profileImage;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -41,15 +47,32 @@ public class HomeFragment extends Fragment {
 
         dailyImageView = view.findViewById(R.id.dailyImageView);
         text = view.findViewById(R.id.textView3);
+        profileImage = view.findViewById(R.id.profileImage);
 
         // Initialize SharedPreferences to retrieve the saved username
         sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", requireActivity().MODE_PRIVATE);
         loggedInUsername = sharedPreferences.getString("loggedInUser", "Default");
 
+
+        loadProfileImage();
         loadRandomNatureImage();
         updateWelcomeText();
 
         return view;
+    }
+    private void loadProfileImage() {
+        if (loggedInUsername != null && !loggedInUsername.equals("Default")) {
+            String imagePath = sharedPreferences.getString("image_" + loggedInUsername, null);
+            if (imagePath != null) {
+                File imageFile = new File(imagePath);
+                if (imageFile.exists()) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+                    if (bitmap != null && profileImage != null) {
+                        profileImage.setImageBitmap(bitmap);
+                    }
+                }
+            }
+        }
     }
 
     private void loadRandomNatureImage() {
@@ -72,6 +95,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateWelcomeText() {
-        text.setText("Welcome " + loggedInUsername);
+        text.setText(loggedInUsername);
     }
+
+
 }

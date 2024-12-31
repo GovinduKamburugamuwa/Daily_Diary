@@ -21,10 +21,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
+        android:fontFamily="@font/aclonica_regular"
         android:gravity="center"
         android:text="Add new note"
-        android:textColor="#FFFFFF"
-        android:fontFamily="@font/aclonica_regular"
+        android:textColor="#322F2F"
         android:textSize="25dp"
         android:textStyle="normal" />
 
@@ -104,9 +104,10 @@
         android:layout_width="131dp"
         android:layout_height="54dp"
         android:layout_gravity="center"
-        android:backgroundTint="@color/light_red"
+        android:background="@drawable/gradient_button_background"
         android:text="SAVE NOTE"
         android:textColor="#FCFEFF"
+        app:backgroundTint="@null"
         app:shapeAppearance="@style/CustomShapeAppearance" />
 
 </LinearLayout>

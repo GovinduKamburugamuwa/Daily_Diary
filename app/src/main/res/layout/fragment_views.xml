@@ -15,6 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TASKS"
+        android:fontFamily="@font/aclonica_regular"
         android:textColor="#FFFFFF"
         android:textSize="20dp"
         android:textStyle="bold" />
